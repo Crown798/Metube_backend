@@ -1,0 +1,5 @@
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /rankinglist              --> my-blog-by-go/controllers.GetVideos (3 handlers)
+[GIN-debug] Listening and serving HTTP on :8083
+[GIN] 2020/01/11 - 15:08:50 | 200 |     51.9761ms |             ::1 | GET      /rankinglist
