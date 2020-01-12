@@ -1,9 +1,10 @@
 package main
 
 import (
+	"regexp"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"regexp"
 )
 
 // Cors 跨域配置
@@ -13,7 +14,16 @@ func Cors() gin.HandlerFunc {
 	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Cookie","token"}
 	if gin.Mode() == gin.ReleaseMode {
 		// 生产环境需要配置跨域域名，否则403
-		config.AllowOrigins = []string{"http://www.example.com"}
+		config.AllowOrigins = []string{"http://182.92.104.192"}
+		config.AllowOriginFunc = func(origin string) bool {
+			if regexp.MustCompile(`^http://127\.0\.0\.1:\d+$`).MatchString(origin) {
+				return true
+			}
+			if regexp.MustCompile(`^http://localhost:\d+$`).MatchString(origin) {
+				return true
+			}
+			return false
+		}
 	} else {
 		// 测试环境下模糊匹配本地开头的请求
 		config.AllowOriginFunc = func(origin string) bool {
@@ -26,7 +36,6 @@ func Cors() gin.HandlerFunc {
 			return false
 		}
 	}
-
 	config.AllowCredentials = true
 	return cors.New(config)
 }
